@@ -1,7 +1,7 @@
 //import { AuthenticatedRequest } from "@/middlewares";
 import { Response, Request } from "express";
 import httpStatus from "../../node_modules/http-status/lib/index";
-import textService from "@/services";
+import textService from "@/services/translator-service";
 import { textPDF } from "@/repositories/translation-repository";
 
 export async function createText(req: Request, res: Response) {

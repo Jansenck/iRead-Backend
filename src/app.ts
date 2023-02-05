@@ -2,9 +2,16 @@ import "reflect-metadata";
 import "express-async-errors";
 import express, { Express } from "express";
 import cors from "cors";
-import { createText } from "./controllers";
 
 import { loadEnv, connectDb, disconnectDB } from "@/config";
+
+import { handleApplicationErrors } from "./middlewares";
+
+import { createText } from "./controllers";
+
+import { usersRouter } from "./routers";
+import { authenticationRouter } from "./routers";
+import { translatorRouter } from "./routers";
 
 loadEnv();
 
@@ -13,7 +20,10 @@ app
   .use(cors())
   .use(express.json())
   .get("/health", (_req, res) => res.send("OK!"))
-  .post("/translator", createText);
+  .use("/users", usersRouter)
+  .use("/auth", authenticationRouter)
+  .use("/translator", translatorRouter)
+  .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
   connectDb();

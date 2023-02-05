@@ -3,9 +3,9 @@ import { Router } from "express";
 import { createText } from "@/controllers";
 //import { createEnrollmentSchema } from "@/schemas";
 
-const textRouter = Router();
+const translatorRouter = Router();
 
-textRouter
+translatorRouter
   .post("/", createText);
 
-export { textRouter };
+export { translatorRouter };
