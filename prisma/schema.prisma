@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Pdf {
+  id        Int       @id @default(autoincrement())
+  userId    Int?
+  text      String    @db.VarChar(5832)
+  createdAt DateTime? @default(now()) @db.Date
+  updatedAt DateTime? @default(now()) @db.Date
+  Users     Users?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Session {
+  id        Int       @id @default(autoincrement())
+  userId    Int?
+  token     String    @unique @db.VarChar(255)
+  createdAt DateTime? @default(now()) @db.Date
+  updatedAt DateTime? @default(now()) @db.Date
+  Users     Users?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Users {
+  id        Int       @id(map: "Users_pkey") @default(autoincrement())
+  email     String    @unique(map: "Users_email_key") @db.VarChar(255)
+  password  String?   @db.VarChar(255)
+  createdAt DateTime? @default(now()) @db.Date
+  updatedAt DateTime? @default(now()) @db.Date
+  Pdf       Pdf[]
+  Session   Session[]
+}
