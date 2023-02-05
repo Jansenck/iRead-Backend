@@ -10,7 +10,6 @@ export async function createText(req: Request, res: Response) {
     await textService.createText(postData);
     return res.sendStatus(httpStatus.CREATED);
   } catch (error) {
-    console.error(error.message);
     return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
